@@ -3,10 +3,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo "Hello World"'
                 sh '''
-                    echo "Multiline shell steps"
-                    ls –lah
+                    echo $(aws secretsmanager get-secret-value --region us-east-1 --secret-id secret | jq -r .SecretString | jq -r .Secret1) > secret.p8
                 '''
             }
         }
